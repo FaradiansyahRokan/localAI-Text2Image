@@ -2,7 +2,7 @@ import torch
 from diffusers import AutoPipelineForText2Image
 import gradio as gr
 
-# Load model di luar fungsi Gradio untuk efisiensi
+
 model_id = "lykon/dreamshaper-xl-v2-turbo"
 device = "cuda"
 
@@ -16,7 +16,6 @@ pipe = AutoPipelineForText2Image.from_pretrained(
 pipe.enable_model_cpu_offload()
 pipe.enable_vae_slicing()
 
-# Buat fungsi untuk menghasilkan gambar
 def generate_image(prompt, negative_prompt, width, height, num_inference_steps, guidance_scale):
     image = pipe(
         prompt=prompt,
@@ -28,7 +27,6 @@ def generate_image(prompt, negative_prompt, width, height, num_inference_steps, 
     ).images[0]
     return image
 
-# Definisikan antarmuka Gradio
 iface = gr.Interface(
     fn=generate_image,
     inputs=[
